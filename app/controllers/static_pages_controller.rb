@@ -5,7 +5,8 @@ require 'net/http'
 require 'securerandom'
 
 class StaticPagesController < ApplicationController
-  before_action :has_code, only: [:new]
+  before_action :not_have_code, only: [:new, :create, :logout]
+  before_action :have_code, only: [:home, :login, :signin]
 
   def home
   end
@@ -163,7 +164,11 @@ class StaticPagesController < ApplicationController
 
     resp, data = http.post(path, data, headers)
     redirect_to "/new_post"
+  end
 
+  def logout
+    reset_session
+    redirect_to root_url
   end
 
   private
@@ -176,7 +181,11 @@ class StaticPagesController < ApplicationController
       ]
     end
 
-    def has_code
+    def not_have_code
       redirect_to root_url unless !session[:oauth_token].nil?
+    end
+
+    def have_code
+      redirect_to '/new_post' unless session[:oauth_token].nil?
     end
 end

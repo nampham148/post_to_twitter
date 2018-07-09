@@ -5,4 +5,5 @@ Rails.application.routes.draw do
   get '/sign-in-with-twitter', to: 'static_pages#signin'
   get '/new_post', to: 'static_pages#new'
   post '/create_post', to: 'static_pages#create'
+  post '/logout', to: 'static_pages#logout'
 end
