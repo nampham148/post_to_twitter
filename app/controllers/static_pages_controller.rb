@@ -15,8 +15,6 @@ class StaticPagesController < ApplicationController
 
   def login
     resp = twitter_login
-    puts resp.body
-    puts resp.code
     if resp.code == "200"
       result = parse_oauth(resp.body)
       redirect_to "https://api.twitter.com/oauth/authenticate?oauth_token=#{result["oauth_token"]}"
